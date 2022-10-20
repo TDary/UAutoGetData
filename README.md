@@ -1,0 +1,2 @@
+# UAutoGetData
+GetInsigthsData
