@@ -19,7 +19,7 @@ func getData(url string, report_url string) string {
 	}
 	request.Header.Add("Content-Type", "application/json")
 	request.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.66 Safari/537.36 Edg/103.0.1264.44")
-	request.Header.Add("Cookie", "_ga=GA1.2.116075688.1657612386; Hm_lvt_4bfddcb32e5c5626aa3d10997c3dacd8=1657884787; app_key=5c316f30; Hm_lvt_eefc5ff12060e96822df38857e4cd9ed=1664279860,1664332706,1664449964,1665215179; project_key=mecha; mysession=MTY2NTMxMTk5M3xOd3dBTkRaV04waFlNbFZKVWpKRU4wVkpNa1UyVWs0eVZVbzNTalpVVlVKT04wUlBSVlZXUmtsS00wRTNRemMxTkVJeVNrSlJWa0U9fEdVdHRF6-3U_EWYs63zdverH8aaO92cXzchzbedpDnC; email=chenderui1%40thewesthill.net; Hm_lpvt_eefc5ff12060e96822df38857e4cd9ed=1665367975")
+	request.Header.Add("Cookie", "_ga=GA1.2.116075688.1657612386; Hm_lvt_4bfddcb32e5c5626aa3d10997c3dacd8=1657884787; app_key=e40280a0; project_key=mecha; Hm_lvt_eefc5ff12060e96822df38857e4cd9ed=1665713410,1666165937,1666944956; mysession=MTY2Nzk2MjgyMXxOd3dBTkVkRU5USlpUbEpIUTA5VlVVRkhWemRaUTFCRlVVVTJXVTlNTjFoYVNGZzFVRk16V1V0QldWUkVVVEpXTWsxVFdFOU1WMEU9fIeNA7K15tdsDnYqV7j4WERBUP7jboxe9QJ2Im1QezlC; email=chenderui1%40thewesthill.net; Hm_lpvt_eefc5ff12060e96822df38857e4cd9ed=1667962828")
 	request.Header.Add("Referer", "http://perfeye.console.testplus.cn/case/list?appKey=mecha")
 	response, err := client.Do(request)
 	if err != nil {
