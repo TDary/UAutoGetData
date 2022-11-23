@@ -4,6 +4,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"time"
 
 	_ "embed"
@@ -65,14 +66,10 @@ func main() {
 	// 设置窗口图标
 	w.SetIcon(hIcon)
 
-	//标题样式设计
-	title := widget.NewShapeTextByName("Title")
-	title.SetSize(20, 20)
-
 	//获取按钮以及输入框
 	btn := widget.NewButtonByName("Btn")
 	input := widget.NewEditByName("Info")
-	input.SetDefaultText("请输入url...")
+	openResult := widget.NewButtonByName("OpenBtn")
 	//注册获取数据按钮被单击事件
 	btn.Event_BnClick(func(pbHandled *bool) int {
 		url_input = input.GetText_Temp()
@@ -121,7 +118,18 @@ func main() {
 		}
 		return 0
 	})
+	//注册打开文件按钮被单机事件
+	openResult.Event_BnClick(func(pbHandled *bool) int {
+		currentDir, _ := os.Getwd() //获取当前程序的目录
+		cmd := exec.Command("explorer", currentDir)
+		er := cmd.Start()
+		if er != nil { // 运行命令
+			ap.Alert("警告", "无法打开当前文件所在目录！"+er.Error())
+		}
+		return 1
+	})
 
+	// }
 	//调整布局
 	w.AdjustLayout()
 	// 显示窗口
