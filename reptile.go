@@ -2,9 +2,9 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
+	"strconv"
 	"time"
 
 	_ "embed"
@@ -16,41 +16,8 @@ import (
 	"github.com/twgh/xcgui/xcc"
 )
 
-//go:embed resource/Reptitle.zip
-var zip []byte
-
-//go:embed resource/xcgui.dll
-var dll []byte
-
-//go:embed resource/Title.ico
-var icon []byte
-
-//窗口图标句柄设置
-var hIcon = 0
-
 func main() {
-	var url_input string
-	var isSuccess string
-	var realUrl string
-	var isMoreUrl bool
-	file_name := "./" + "result" + ".csv"
-
-	_, err := os.Stat(file_name)
-	if err == nil {
-		err = os.Remove(file_name)
-		if err != nil {
-			fmt.Print("result.csv文件正在打开中，请将其关闭后再执行本程序...")
-			time.Sleep(time.Second * 10)
-			return
-		} else {
-			//fmt.Print("清除旧文件完毕...")
-			WriteHead(file_name)
-		}
-	} else {
-		WriteHead(file_name)
-	}
-
-	err = xc.WriteDll(dll)
+	err := xc.WriteDll(dll)
 	if err != nil {
 		panic(err)
 	}
@@ -66,12 +33,16 @@ func main() {
 	// 设置窗口图标
 	w.SetIcon(hIcon)
 
-	//获取按钮以及输入框
+	//获取按钮以及输入框选择框
 	btn := widget.NewButtonByName("Btn")
 	input := widget.NewEditByName("Info")
 	openResult := widget.NewButtonByName("OpenBtn")
 	//注册获取数据按钮被单击事件
 	btn.Event_BnClick(func(pbHandled *bool) int {
+		now = time.Now().UnixNano()
+		currentTime = strconv.FormatInt(now, 10)
+		file_name = "./" + currentTime + "_result" + ".csv"
+		WriteHead(file_name) //写入文件
 		url_input = input.GetText_Temp()
 		if len(url_input) < 10 {
 			ap.Alert("提示", "输入url有误,请重新输入")
@@ -98,6 +69,7 @@ func main() {
 			xc.XWnd_SetIcon(hWindow, hIcon)
 			// 显示模态窗口
 			xc.XModalWnd_DoModal(hWindow)
+			input.SetText("") //获取成功后初始化
 		} else {
 			realUrl = ProcessUrl(url_input)
 			isSuccess = getData(realUrl, url_input)
@@ -110,6 +82,7 @@ func main() {
 				xc.XWnd_SetIcon(hWindow, hIcon)
 				// 显示模态窗口
 				xc.XModalWnd_DoModal(hWindow)
+				input.SetText("") //获取成功后初始化
 			} else if isSuccess == "false" {
 				ap.Alert("警告", "参数已过期，请联系开发人员更新@陈德睿")
 			} else {

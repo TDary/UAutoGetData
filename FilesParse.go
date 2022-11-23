@@ -45,7 +45,6 @@ func WriteHead2(file_name string) {
 
 //写入数据
 func WriteData2(res result2) {
-	file_name := "./" + "result" + ".csv"
 	f, err := os.OpenFile(file_name, os.O_RDWR|os.O_APPEND, 0666)
 	if err != nil {
 		panic(err)
@@ -77,7 +76,6 @@ func WriteData2(res result2) {
 
 //写入数据
 func WriteData(res result) {
-	file_name := "./" + "result" + ".csv"
 	f, err := os.OpenFile(file_name, os.O_RDWR|os.O_APPEND, 0666)
 	if err != nil {
 		panic(err)
