@@ -4,23 +4,18 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"time"
 )
 
-var client = http.Client{
-	Timeout: 10 * time.Second,
-}
-
-//获取数据  版本修改入口
-func getData(url string, report_url string) string {
+//获取数据
+func getData(url string, report_url string, isdaily bool) string {
 	request, err := http.NewRequest("POST", url, nil)
 	if err != nil {
 		return err.Error()
 	}
-	request.Header.Add("Content-Type", "application/json")
-	request.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.66 Safari/537.36 Edg/103.0.1264.44")
-	request.Header.Add("Cookie", "_ga=GA1.2.116075688.1657612386; Hm_lvt_4bfddcb32e5c5626aa3d10997c3dacd8=1657884787; app_key=e40280a0; project_key=mecha; Hm_lvt_eefc5ff12060e96822df38857e4cd9ed=1665713410,1666165937,1666944956; mysession=MTY2Nzk2MjgyMXxOd3dBTkVkRU5USlpUbEpIUTA5VlVVRkhWemRaUTFCRlVVVTJXVTlNTjFoYVNGZzFVRk16V1V0QldWUkVVVEpXTWsxVFdFOU1WMEU9fIeNA7K15tdsDnYqV7j4WERBUP7jboxe9QJ2Im1QezlC; email=chenderui1%40thewesthill.net; Hm_lpvt_eefc5ff12060e96822df38857e4cd9ed=1667962828")
-	request.Header.Add("Referer", "http://perfeye.console.testplus.cn/case/list?appKey=mecha")
+	request.Header.Add("Content-Type", ContentType)
+	request.Header.Add("User-Agent", Useragent)
+	request.Header.Add("Cookie", Cookie)
+	request.Header.Add("Referer", Refer)
 	response, err := client.Do(request)
 	if err != nil {
 		return err.Error()
@@ -30,16 +25,22 @@ func getData(url string, report_url string) string {
 	if err != nil {
 		return err.Error()
 	}
-	result := ProcessData(string(body), report_url)
-	if result != "" {
-		return "false"
+	if isdaily {
+		result := ProcessData(string(body), report_url)
+		if result != "" {
+			return "false"
+		}
+	} else {
+		result := ProcessData2(string(body), report_url)
+		if result != "" {
+			return "false"
+		}
 	}
 	return "Success"
 }
 
 //周性能版本
 func ProcessData2(resultData string, report_Url string) string {
-	var DetailMap = make(map[string]interface{})
 	err := json.Unmarshal([]byte(resultData), &DetailMap)
 	if err != nil {
 		return err.Error()
@@ -70,16 +71,15 @@ func ProcessData2(resultData string, report_Url string) string {
 	avgDownload := DetailNetWork.(map[string]interface{})["AvgRecv(KB/s)"]
 	maxDownload := DetailNetWork.(map[string]interface{})["MaxRecv(KB/s)"]
 	//获取到的数据，以json形式输出为csv
-	resData := result2{casename, avgfps, minfps, tp90fps, smooth, PeakMemory, maxGpuMemry, avgapp, maxapp,
+	resDataW = result2{casename, avgfps, minfps, tp90fps, smooth, PeakMemory, maxGpuMemry, avgapp, maxapp,
 		avgGpuLoad, maxGpuLoad, avgDrawcall, maxDrawcall, avgPrimitive, maxPrimitive, avgUpload, maxUpload, avgDownload,
 		maxDownload, report_Url}
-	WriteData2(resData)
+	WriteData2(resDataW)
 	return ""
 }
 
-//处理数据初始版本
+//处理数据日常版本
 func ProcessData(resultData string, report_Url string) string {
-	var DetailMap = make(map[string]interface{})
 	err := json.Unmarshal([]byte(resultData), &DetailMap)
 	if err != nil {
 		return err.Error()
@@ -124,9 +124,9 @@ func ProcessData(resultData string, report_Url string) string {
 	avgWrite := DetailIOBytyes.(map[string]interface{})["AvgWrittenBytes(KB/s)"]
 	maxWrite := DetailIOBytyes.(map[string]interface{})["MaxWrittenBytes(KB/s)"]
 	//获取到的数据，以json形式输出为csv
-	resData := result{casename, avgfps, maxfps, minfps, tp90fps, jank, bigjank, ratio10, ratio30, avgapp, maxapp, InitMemory, AvgMemory, PeakMemory,
+	resDataD = result{casename, avgfps, maxfps, minfps, tp90fps, jank, bigjank, ratio10, ratio30, avgapp, maxapp, InitMemory, AvgMemory, PeakMemory,
 		avgGpuLoad, maxGpuLoad, avgGpuMemry, maxGpuMemry, avgDrawcall, maxDrawcall, avgVertex, maxVertex, avgPrimitive, maxPrimitive,
 		avgSend, maxSend, avgRecv, maxRecv, avgRead, maxRead, avgWrite, maxWrite, report_Url}
-	WriteData(resData)
+	WriteData(resDataD)
 	return ""
 }

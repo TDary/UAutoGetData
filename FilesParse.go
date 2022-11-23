@@ -6,8 +6,8 @@ import (
 	"strconv"
 )
 
-//初始版本
-func WriteHead(file_name string) {
+//写入文件初始化格式
+func WriteHead(file_name string, data []string) {
 	f, err := os.Create(file_name) //创建文件
 	if err != nil {
 		panic(err)
@@ -16,29 +16,6 @@ func WriteHead(file_name string) {
 
 	f.WriteString("\xEF\xBB\xBF") //写入UTF-8
 	w := csv.NewWriter(f)         //创建一个新的写入文件流
-	data := []string{
-		"案例名", "AvgFPS", "MaxFPS", "MinFPS", "FPS TP90", "Jank(/10min)", "BigJank(/10min)", "RatioFluctuate>10%", "RatioFluctuate>30%", "AvgApp(%)", "MaxApp(%)", "InitMemory(MB)", "AvgMemory(MB)", "PeakMemory(MB)",
-		"Avg(GPULoad)[%]", "Max(GPULoad)[%]", "Avg(GPUMemoryUsed)[MB]", "Peak(GPUMemoryUsed)[MB]", "Avg(Drawcall)",
-		"Peak(Drawcall)", "Avg(Vertex)", "Peak(Vertex)", "Avg(Primitive)", "Peak(Primitive)", "AvgSend(KB/s)", "MaxSend(KB/s)", "AvgRecv(KB/s)",
-		"MaxRecv(KB/s)", "AvgReadBytes(KB/s)", "MaxReadBytes(KB/s)", "AvgWrittenBytes(KB/s)", "MaxWrittenBytes(KB/s)", "基础数据"}
-	w.Write(data)
-	w.Flush()
-}
-
-//周性能版本
-func WriteHead2(file_name string) {
-	f, err := os.Create(file_name) //创建文件
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	f.WriteString("\xEF\xBB\xBF") //写入UTF-8
-	w := csv.NewWriter(f)         //创建一个新的写入文件流
-	data := []string{
-		"案例名", "平均FPS", "最低FPS", "90%FPS大于(>=40FPS)", "流畅度", "私有提交内存峰值<=8GB", "显存峰值", "平均CPU占用", "最大CPU占用", "平均GPU占用",
-		"最大GPU占用", "平均Draw Call", "最大Draw Call", "平均三角面数(千)", "最大三角面数(千)",
-		"平均上传(KB/s)", "上传峰值(KB/s)", "平均下载(KB/s)", "下载峰值(KB/s)", "性能报告地址"}
 	w.Write(data)
 	w.Flush()
 }

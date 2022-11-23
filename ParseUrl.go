@@ -6,11 +6,9 @@ import (
 
 //处理单个url形式，找到真实的url
 func ProcessUrl(url string) string {
-	var apiUrl string
-	var uuid string
-	listUrl := strings.Split(url, "/")
+	listUrl = strings.Split(url, "/")
 	uuid = listUrl[4]
-	apiUrl = "http://perfeye.console.testplus.cn/api/show/task/" + uuid
+	apiUrl = perfeyeApi + uuid
 	return apiUrl
 }
 
@@ -25,12 +23,6 @@ func IsMoreUrls(url string) bool {
 
 //处理多个url形式，找到真实的url
 func ProcessUrls(url string) ([]string, []string) {
-	var everyUrl []string
-	var apiurls []string
-	var originUrls []string
-	var apiUrl string
-	var uuid string
-	var oriUrl string
 	everyUrl = strings.Split(url, ";")
 	for _, item := range everyUrl {
 		if len(item) < 10 {
@@ -38,7 +30,7 @@ func ProcessUrls(url string) ([]string, []string) {
 		}
 		listUrl := strings.Split(item, "/")
 		uuid = listUrl[4]
-		apiUrl = "http://perfeye.console.testplus.cn/api/show/task/" + uuid
+		apiUrl = perfeyeApi + uuid
 		apiurls = append(apiurls, apiUrl)
 		if strings.Contains(item, "\n") {
 			oriUrl = strings.Trim(item, "\n")
