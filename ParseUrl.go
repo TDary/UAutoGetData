@@ -14,7 +14,7 @@ func ProcessUrl(url string) string {
 
 //判断是否输入了多行url
 func IsMoreUrls(url string) bool {
-	if strings.Contains(url, ";") {
+	if strings.Contains(url, "\n") {
 		return true
 	} else {
 		return false
@@ -23,7 +23,7 @@ func IsMoreUrls(url string) bool {
 
 //处理多个url形式，找到真实的url
 func ProcessUrls(url string) ([]string, []string) {
-	everyUrl = strings.Split(url, ";")
+	everyUrl = strings.Split(url, "\n")
 	for _, item := range everyUrl {
 		if len(item) < 10 {
 			break
