@@ -42,9 +42,48 @@ var client = http.Client{
 }
 var dataD []string
 var dataW []string
+var dataL []string
 var perfeyeApi string
 var resDataD result
 var resDataW result2
+var resDataL result3
+
+type result3 struct {
+	CaseName         interface{}
+	LabelName        interface{}
+	AvgFPS           interface{}
+	MaxFPS           interface{}
+	MinFPS           interface{}
+	FPSTP90          interface{}
+	Jank             interface{}
+	BigJank          interface{}
+	RatioFluctuate10 interface{}
+	RatioFluctuate30 interface{}
+	AvgApp           interface{}
+	MaxApp           interface{}
+	InitMemory       interface{}
+	AvgMemory        interface{}
+	PeakMemory       interface{}
+	AvgGPULoad       interface{}
+	MaxGPULoad       interface{}
+	AvgGPUMemory     interface{}
+	MaxGPUMemory     interface{}
+	AvgDrawcall      interface{}
+	PeakDrawcall     interface{}
+	AvgVertex        interface{}
+	PeakVertex       interface{}
+	AvgPrimitive     interface{}
+	PeakPrimitive    interface{}
+	AvgSend          interface{}
+	MaxSend          interface{}
+	AvgRecv          interface{}
+	MaxRecv          interface{}
+	AvgRead          interface{}
+	MaxRead          interface{}
+	AvgWrite         interface{}
+	MaxWrite         interface{}
+	BasicData        string
+}
 
 type result2 struct {
 	CaseName        interface{}

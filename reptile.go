@@ -37,6 +37,7 @@ func main() {
 	//获取按钮以及输入框选择框
 	btnD := widget.NewButtonByName("BtnD")
 	btnW := widget.NewButtonByName("BtnW")
+	btnL := widget.NewButtonByName("BtnL")
 	input := widget.NewEditByName("Info")
 	openResult := widget.NewButtonByName("OpenBtn")
 	//注册获取周性能数据被单机事件
@@ -54,7 +55,7 @@ func main() {
 		if isMoreUrl {
 			realUrls, originUrls := ProcessUrls(url_input)
 			for index, item := range realUrls {
-				isSuccess = getData(item, originUrls[index], false)
+				isSuccess = getData(item, originUrls[index], "week")
 				if isSuccess == "Success" {
 					continue
 				} else if isSuccess == "false" {
@@ -75,7 +76,7 @@ func main() {
 			input.DeleteSelect()
 		} else {
 			realUrl = ProcessUrl(url_input)
-			isSuccess = getData(realUrl, url_input, false)
+			isSuccess = getData(realUrl, url_input, "week")
 			if isSuccess == "Success" {
 				// 创建信息框, 本质是一个模态窗口
 				hWindow := ap.Msg_Create("提示", "获取成功!", xcc.MessageBox_Flag_Ok|xcc.MessageBox_Flag_Icon_Info, w.GetHWND(), xcc.Window_Style_Modal)
@@ -110,7 +111,7 @@ func main() {
 		if isMoreUrl {
 			realUrls, originUrls := ProcessUrls(url_input)
 			for index, item := range realUrls {
-				isSuccess = getData(item, originUrls[index], true)
+				isSuccess = getData(item, originUrls[index], "daily")
 				if isSuccess == "Success" {
 					continue
 				} else if isSuccess == "false" {
@@ -131,7 +132,63 @@ func main() {
 			input.DeleteSelect()
 		} else {
 			realUrl = ProcessUrl(url_input)
-			isSuccess = getData(realUrl, url_input, true)
+			isSuccess = getData(realUrl, url_input, "daily")
+			if isSuccess == "Success" {
+				// 创建信息框, 本质是一个模态窗口
+				hWindow := ap.Msg_Create("提示", "获取成功!", xcc.MessageBox_Flag_Ok|xcc.MessageBox_Flag_Icon_Info, w.GetHWND(), xcc.Window_Style_Modal)
+				// 设置窗口边框大小
+				xc.XWnd_SetBorderSize(hWindow, 1, 34, 1, 1)
+				// 设置窗口图标
+				xc.XWnd_SetIcon(hWindow, hIcon)
+				// 显示模态窗口
+				xc.XModalWnd_DoModal(hWindow)
+				input.SelectAll() //获取成功后删除当前url
+				input.DeleteSelect()
+			} else if isSuccess == "false" {
+				ap.Alert("警告", "参数已过期，请联系开发人员更新@陈德睿")
+			} else {
+				ap.Alert("提示", "输入url有误,请重新输入")
+			}
+		}
+		return 0
+	})
+	//注册获取带标签名的按钮被单击事件
+	btnL.Event_BnClick(func(pbHandled *bool) int {
+		now = time.Now().UnixNano()
+		currentTime = strconv.FormatInt(now, 10)
+		file_name = "./" + currentTime + "_ResultLabel" + ".csv"
+		WriteHead(file_name, dataL) //写入文件
+		url_input = input.GetText_Temp()
+		if len(url_input) < 10 {
+			ap.Alert("提示", "输入url有误,请重新输入")
+			return 0
+		}
+		isMoreUrl = IsMoreUrls(url_input)
+		if isMoreUrl {
+			realUrls, originUrls := ProcessUrls(url_input)
+			for index, item := range realUrls {
+				isSuccess = getData(item, originUrls[index], "label")
+				if isSuccess == "Success" {
+					continue
+				} else if isSuccess == "false" {
+					ap.Alert("警告", "参数已过期，请联系开发人员更新@陈德睿")
+				} else {
+					ap.Alert("提示", "有输入错误的url,请重新输入")
+				}
+			}
+			// 创建信息框, 本质是一个模态窗口
+			hWindow := ap.Msg_Create("提示", "获取成功!", xcc.MessageBox_Flag_Ok|xcc.MessageBox_Flag_Icon_Info, w.GetHWND(), xcc.Window_Style_Modal)
+			// 设置窗口边框大小
+			xc.XWnd_SetBorderSize(hWindow, 1, 34, 1, 1)
+			// 设置窗口图标
+			xc.XWnd_SetIcon(hWindow, hIcon)
+			// 显示模态窗口
+			xc.XModalWnd_DoModal(hWindow)
+			input.SelectAll() //获取成功后删除当前url
+			input.DeleteSelect()
+		} else {
+			realUrl = ProcessUrl(url_input)
+			isSuccess = getData(realUrl, url_input, "label")
 			if isSuccess == "Success" {
 				// 创建信息框, 本质是一个模态窗口
 				hWindow := ap.Msg_Create("提示", "获取成功!", xcc.MessageBox_Flag_Ok|xcc.MessageBox_Flag_Icon_Info, w.GetHWND(), xcc.Window_Style_Modal)

@@ -70,3 +70,23 @@ func WriteData(res result) {
 	w.Write(resData)
 	w.Flush()
 }
+
+//写入带label的数据
+func WriteData3(res result3) {
+	f, err := os.OpenFile(file_name, os.O_RDWR|os.O_APPEND, 0666)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	f.WriteString("\xEF\xBB\xBF") //写入UTF-8
+	w := csv.NewWriter(f)         //创建一个新的写入文件流
+
+	resData := []string{res.CaseName.(string), res.LabelName.(string), res.AvgFPS.(string), res.MaxFPS.(string), res.MinFPS.(string),
+		res.FPSTP90.(string), res.Jank.(string), res.BigJank.(string), res.RatioFluctuate10.(string), res.RatioFluctuate30.(string), res.AvgApp.(string), res.MaxApp.(string), res.InitMemory.(string), res.AvgMemory.(string),
+		res.PeakMemory.(string), res.AvgGPULoad.(string), res.MaxGPULoad.(string), res.AvgGPUMemory.(string), res.MaxGPUMemory.(string),
+		res.AvgDrawcall.(string), res.PeakDrawcall.(string), res.AvgVertex.(string), res.PeakVertex.(string), res.AvgPrimitive.(string),
+		res.PeakPrimitive.(string), res.AvgSend.(string), res.MaxSend.(string), res.AvgRecv.(string), res.MaxRecv.(string), res.AvgRead.(string),
+		res.MaxRead.(string), res.AvgWrite.(string), res.MaxWrite.(string), res.BasicData}
+	w.Write(resData)
+	w.Flush()
+}
