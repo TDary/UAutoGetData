@@ -3,7 +3,7 @@ package main
 func Init() {
 	ContentType = "application/json"
 	Useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.66 Safari/537.36 Edg/103.0.1264.44"
-	Cookie = "_ga=GA1.2.116075688.1657612386; Hm_lvt_4bfddcb32e5c5626aa3d10997c3dacd8=1657884787; app_key=e40280a0; Hm_lvt_eefc5ff12060e96822df38857e4cd9ed=1668304669,1669030213,1670317612; project_key=mecha; mysession=MTY3MDMzMDIwM3xOd3dBTkVwVU4weEdRek5FV2xCWFdrWkJTazlMTlVkS1ZsWk9RVUpDV2pOTlFsWkpTRXMwVjBoS1dVVTFSVE5ITmpRMFZWWlhVVUU9fCc72aIc6jEnUHNbO9ifML2kQ0NbHbXrDfDJ5NZLXs7D; email=chenderui1%40thewesthill.net; Hm_lpvt_eefc5ff12060e96822df38857e4cd9ed=1670330209"
+	Cookie = "_ga=GA1.2.116075688.1657612386; Hm_lvt_4bfddcb32e5c5626aa3d10997c3dacd8=1657884787; app_key=e40280a0; Hm_lvt_eefc5ff12060e96822df38857e4cd9ed=1670851935,1671270816,1671415537; project_key=mecha; mysession=MTY3Mjk3NzM4OHxOd3dBTkZCS016VkRTRkJHUms0M1JFYzBSRXBVVGtFeldrUkNTakpYUkZoSE5WaFVSbGxNUnpSQ1VWbFRVVkZMU3pJMFMxWkVOVUU9fFbkjlY0xZGzXkAizP1LnRIsb541w3CDwWj1YUYLeOAj; email=chenderui1%40thewesthill.net; Hm_lpvt_eefc5ff12060e96822df38857e4cd9ed=1672977390"
 	Refer = "http://perfeye.console.testplus.cn/case/list?appKey=mecha"
 	//日常版本文件格式初始化
 	dataD = []string{
