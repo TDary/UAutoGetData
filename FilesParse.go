@@ -61,7 +61,7 @@ func WriteData(res result) {
 	f.WriteString("\xEF\xBB\xBF") //写入UTF-8
 	w := csv.NewWriter(f)         //创建一个新的写入文件流
 
-	resData := []string{res.CaseName.(string), res.AvgFPS.(string), res.MaxFPS.(string), res.MinFPS.(string),
+	resData := []string{res.CaseName.(string), res.DeviceType.(string), res.AvgFPS.(string), res.MaxFPS.(string), res.MinFPS.(string),
 		res.FPSTP90.(string), res.Jank.(string), res.BigJank.(string), res.RatioFluctuate10.(string), res.RatioFluctuate30.(string), res.AvgApp.(string), res.MaxApp.(string), res.InitMemory.(string), res.AvgMemory.(string),
 		res.PeakMemory.(string), res.AvgGPULoad.(string), res.MaxGPULoad.(string), res.AvgGPUMemory.(string), res.MaxGPUMemory.(string),
 		res.AvgDrawcall.(string), res.PeakDrawcall.(string), res.AvgVertex.(string), res.PeakVertex.(string), res.AvgPrimitive.(string),

@@ -110,6 +110,7 @@ type result2 struct {
 
 type result struct {
 	CaseName         interface{}
+	DeviceType       interface{}
 	AvgFPS           interface{}
 	MaxFPS           interface{}
 	MinFPS           interface{}

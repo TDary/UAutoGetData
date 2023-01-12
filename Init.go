@@ -7,7 +7,7 @@ func Init() {
 	Refer = "http://perfeye.console.testplus.cn/case/list?appKey=mecha"
 	//日常版本文件格式初始化
 	dataD = []string{
-		"案例名", "AvgFPS", "MaxFPS", "MinFPS", "FPS TP90", "Jank(/10min)", "BigJank(/10min)", "RatioFluctuate>10%", "RatioFluctuate>30%", "AvgApp(%)", "MaxApp(%)", "InitMemory(MB)", "AvgMemory(MB)", "PeakMemory(MB)",
+		"案例名", "设备类型", "AvgFPS", "MaxFPS", "MinFPS", "FPS TP90", "Jank(/10min)", "BigJank(/10min)", "RatioFluctuate>10%", "RatioFluctuate>30%", "AvgApp(%)", "MaxApp(%)", "InitMemory(MB)", "AvgMemory(MB)", "PeakMemory(MB)",
 		"Avg(GPULoad)[%]", "Max(GPULoad)[%]", "Avg(GPUMemoryUsed)[MB]", "Peak(GPUMemoryUsed)[MB]", "Avg(Drawcall)",
 		"Peak(Drawcall)", "Avg(Vertex)", "Peak(Vertex)", "Avg(Primitive)", "Peak(Primitive)", "AvgSend(KB/s)", "MaxSend(KB/s)", "AvgRecv(KB/s)",
 		"MaxRecv(KB/s)", "AvgReadBytes(KB/s)", "MaxReadBytes(KB/s)", "AvgWrittenBytes(KB/s)", "MaxWrittenBytes(KB/s)", "基础数据"}
